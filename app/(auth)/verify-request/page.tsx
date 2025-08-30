@@ -16,12 +16,12 @@ import {
 } from "@/components/ui/input-otp";
 import { authClient } from "@/lib/auth-client";
 import { useSearchParams, useRouter } from "next/navigation";
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, Suspense } from "react";
 import { toast } from "sonner";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { Loader } from "lucide-react";
 
-const VerifyRequest = () => {
+const VerifyRequestContent = () => {
   const [otp, setOtp] = useState<string>("");
   const [emailPending, startEmailTransition] = useTransition();
   const router = useRouter();
@@ -103,6 +103,14 @@ const VerifyRequest = () => {
         </CardContent>
       </CardHeader>
     </Card>
+  );
+};
+
+const VerifyRequest = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyRequestContent />
+    </Suspense>
   );
 };
 
