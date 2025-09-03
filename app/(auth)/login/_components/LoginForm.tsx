@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GithubIcon, Loader, Send } from "lucide-react";
-import { Input } from "../../../../components/ui/input";
+import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import z from "zod";
@@ -19,7 +19,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormMessage,
   FormItem,
   FormLabel,
