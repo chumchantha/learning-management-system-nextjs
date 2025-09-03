@@ -1,11 +1,6 @@
-"use client";
-
 import { buttonVariants } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Feature = {
@@ -42,20 +37,6 @@ const features: Feature[] = [
 ];
 
 export default function Home() {
-  const { data: session } = authClient.useSession();
-  const router = useRouter();
-
-  async function signOut() {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          toast.success("Signout Successfully");
-          router.push("/login");
-        },
-      },
-    });
-  }
-
   return (
     <>
       <section className="relative py-20">
@@ -65,7 +46,7 @@ export default function Home() {
           </Badge>
 
           <h1
-            className="text-center text-4xl md:text-6xl tracking-tight text-balance
+            className="text-center text-4xl md:text-6xl tracking-wide text-balance
            font-bold"
           >
             Elevate your Leaning Experience
@@ -77,12 +58,6 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <Link className={buttonVariants({ size: "lg" })} href="/courses">
               Explore Courses
-            </Link>
-            <Link
-              className={buttonVariants({ size: "lg", variant: "outline" })}
-              href="/login"
-            >
-              Sign In
             </Link>
           </div>
         </div>
