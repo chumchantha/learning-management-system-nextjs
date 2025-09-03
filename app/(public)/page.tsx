@@ -1,21 +1,12 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ui/themeToggle";
+import { buttonVariants } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Feature = {
   title: string;
