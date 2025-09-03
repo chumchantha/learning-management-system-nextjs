@@ -6,10 +6,18 @@ import {
   pgEnum,
   uuid,
   varchar,
+  integer,
 } from "drizzle-orm/pg-core";
 
 // Enums for Better Auth
 export const roleEnum = pgEnum("role", ["USER", "ADMIN", "MODERATOR"]);
+
+// Courses enum
+export const CourseLevelEnum = pgEnum("courseLevel", [
+  "BEGINNER",
+  "INTERMEDIATE",
+  "ADVANCED",
+]);
 
 // Users table (Better Auth compatible)
 export const user = pgTable("user", {
@@ -63,6 +71,21 @@ export const verification = pgTable("verification", {
   identifier: varchar("identifier").notNull(),
   value: varchar("value").notNull(),
   expiresAt: timestamp("expiresAt").notNull(),
+  createdAt: timestamp("createdAt").defaultNow(),
+  updatedAt: timestamp("updatedAt").defaultNow(),
+});
+
+// Courses table
+export const course = pgTable("course", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: varchar("description", { length: 1000 }).notNull(),
+  fileKey: text("fileKey").notNull(),
+  price: integer("price").notNull(),
+  level: CourseLevelEnum("level").notNull().default("BEGINNER"),
+  category: varchar("category", { length: 255 }).notNull(),
+  smallDescription: varchar("smallDescription", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull(),
   createdAt: timestamp("createdAt").defaultNow(),
   updatedAt: timestamp("updatedAt").defaultNow(),
 });
