@@ -5,7 +5,6 @@ import {
   timestamp,
   boolean,
   pgEnum,
-  uuid,
   varchar,
   integer,
 } from "drizzle-orm/pg-core";
@@ -26,7 +25,7 @@ export const CourseStatusEnum = pgEnum("courseStatus", [
 
 // Users table (Better Auth compatible)
 export const user = pgTable("user", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: varchar("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(), //nickname
   username: varchar("username", { length: 50 }).unique(),
   email: varchar("email", { length: 255 }).notNull().unique(),
@@ -39,24 +38,24 @@ export const user = pgTable("user", {
 
 // Sessions table (Better Auth compatible)
 export const session = pgTable("session", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: varchar("id").primaryKey(),
   expiresAt: timestamp("expiresAt").notNull(),
   token: varchar("token").notNull().unique(),
   createdAt: timestamp("createdAt").notNull().defaultNow(),
   updatedAt: timestamp("updatedAt").notNull().defaultNow(),
   ipAddress: varchar("ipAddress", { length: 45 }),
   userAgent: text("userAgent"),
-  userId: uuid("userId")
+  userId: varchar("userId")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
 // Accounts table (Better Auth compatible for OAuth)
 export const account = pgTable("account", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: varchar("id").primaryKey(),
   accountId: varchar("accountId").notNull(),
   providerId: varchar("providerId").notNull(),
-  userId: uuid("userId")
+  userId: varchar("userId")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
   accessToken: text("accessToken"),
@@ -72,7 +71,7 @@ export const account = pgTable("account", {
 
 // Verification table (Better Auth compatible)
 export const verification = pgTable("verification", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: varchar("id").primaryKey(),
   identifier: varchar("identifier").notNull(),
   value: varchar("value").notNull(),
   expiresAt: timestamp("expiresAt").notNull(),
@@ -82,8 +81,8 @@ export const verification = pgTable("verification", {
 
 // Courses table
 export const course = pgTable("course", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("userId")
+  id: varchar("id").primaryKey(),
+  userId: varchar("userId")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
   title: varchar("title", { length: 255 }).notNull(),

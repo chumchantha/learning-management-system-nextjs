@@ -1,3 +1,5 @@
+CREATE TYPE "public"."courseLevel" AS ENUM('BEGINNER', 'INTERMEDIATE', 'ADVANCED');--> statement-breakpoint
+CREATE TYPE "public"."courseStatus" AS ENUM('DRAFT', 'PUBLISHED', 'ARCHIVED');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('USER', 'ADMIN', 'MODERATOR');--> statement-breakpoint
 CREATE TABLE "account" (
 	"id" varchar PRIMARY KEY NOT NULL,
@@ -13,6 +15,22 @@ CREATE TABLE "account" (
 	"password" varchar(255),
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "course" (
+	"id" varchar PRIMARY KEY NOT NULL,
+	"userId" varchar NOT NULL,
+	"title" varchar(255) NOT NULL,
+	"description" varchar(1000) NOT NULL,
+	"fileKey" text NOT NULL,
+	"price" integer NOT NULL,
+	"level" "courseLevel" DEFAULT 'BEGINNER' NOT NULL,
+	"status" "courseStatus" DEFAULT 'DRAFT' NOT NULL,
+	"category" varchar(255) NOT NULL,
+	"smallDescription" varchar(255) NOT NULL,
+	"slug" varchar(255) NOT NULL,
+	"createdAt" timestamp DEFAULT now(),
+	"updatedAt" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 CREATE TABLE "session" (
@@ -51,4 +69,5 @@ CREATE TABLE "verification" (
 );
 --> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "course" ADD CONSTRAINT "course_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "session" ADD CONSTRAINT "session_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;
