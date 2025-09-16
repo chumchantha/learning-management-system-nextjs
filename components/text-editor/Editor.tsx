@@ -3,16 +3,20 @@
 import React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import MenuBar from "./MenuBar";
 
-function Editor() {
+function TextEditor() {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "<p>Hello World! 🌎️</p>",
-    // Don't render immediately on the server to avoid SSR issues
     immediatelyRender: false,
   });
 
-  return <EditorContent editor={editor} />;
+  return (
+    <div>
+      <MenuBar editor={editor} />
+      {/* <EditorContent editor={editor} /> */}
+    </div>
+  );
 }
 
-export default Editor;
+export default TextEditor;

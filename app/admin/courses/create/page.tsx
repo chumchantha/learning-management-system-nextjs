@@ -32,6 +32,7 @@ import {
   CourseSchemaType,
   courseStatus,
 } from "@/lib/zodSchema";
+import TextEditor from "@/components/text-editor/Editor";
 
 const CreateCourse = () => {
   const form = useForm<CourseSchemaType>({
@@ -146,11 +147,12 @@ const CreateCourse = () => {
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea
+                        <TextEditor />
+                        {/* <Textarea
                           placeholder="Description"
                           className="min-h-30"
                           {...field}
-                        />
+                        /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
