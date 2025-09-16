@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,7 @@ import {
   courseCategory,
   courseLevel,
   CourseSchemaType,
+  courseStatus,
 } from "@/lib/zodSchema";
 
 const CreateCourse = () => {
@@ -95,6 +96,7 @@ const CreateCourse = () => {
                             const slug = toSlug(titleValue);
                             form.setValue("slug", slug);
                           }}
+                          autoFocus
                         />
                       </FormControl>
                       <FormMessage />
@@ -274,8 +276,37 @@ const CreateCourse = () => {
                   )}
                 />
 
+                {/* Status */}
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Status</FormLabel>
+                      <FormControl>
+                        <Select
+                          defaultValue={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {courseStatus.map((status) => (
+                              <SelectItem key={status} value={status}>
+                                {status}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <Button type="submit" variant="secondary">
-                  Create
+                  Create <PlusIcon />
                 </Button>
               </form>
             </Form>
