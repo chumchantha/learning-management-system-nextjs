@@ -89,6 +89,7 @@ export const course = pgTable("course", {
   description: varchar("description", { length: 1000 }).notNull(),
   fileKey: text("fileKey").notNull(),
   price: integer("price").notNull(),
+  duration: integer("duration").notNull(),
   level: CourseLevelEnum("level").notNull().default("BEGINNER"),
   status: CourseStatusEnum("status").notNull().default("DRAFT"),
   category: varchar("category", { length: 255 }).notNull(),
@@ -105,11 +106,3 @@ export const userRelation = relations(user, ({ many }) => ({
 export const courseRelation = relations(course, ({ one }) => ({
   user: one(user, { fields: [course.userId], references: [user.id] }),
 }));
-
-//Type
-export type User = typeof user.$inferSelect;
-export type NewUser = typeof user.$inferInsert;
-export type Session = typeof session.$inferSelect;
-export type Account = typeof account.$inferSelect;
-export type Course = typeof course.$inferSelect;
-export type NewCourse = typeof course.$inferInsert;
